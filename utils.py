@@ -55,8 +55,11 @@ def logger(filename, console_debug_level, file_debug_level):
     elif console_debug_level == 4:
         ch.setLevel(logging.CRITICAL)
     
+    else:
+        ch.setLevel(logging.INFO) # Default log leve if undefined
+    
     ch.setFormatter(formatter)
-    logger.addHandler(ch) 
+    logger.addHandler(ch)
     
     # Create log file
     fh = logging.FileHandler(filename)

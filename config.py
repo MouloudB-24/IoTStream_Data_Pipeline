@@ -13,9 +13,9 @@ CONSOLE_DEBUG_LEVEL = 1
 # FILE Handler
 FILE_DEBUG_LEVEL = 0
 
-LOGGING_FILE = "logging/logge"
+LOGGING_FILE = "logging/logger"
 
 INPUT_DATA_FILE = "resources/sites.json"
 
-SITE_IDS = [101, 102, 103, 104, 105]
+SITE_IDS = [(101, "CNPE-Nogent")]
 

@@ -17,10 +17,10 @@
 import os
 import random
 import time
-from datetime import datetime, timedelta
+from datetime import datetime
 
-import utils
-import connection
+from utils import pp_json
+from connection import create_mongo_connection, insert_mongo
 
 
 def generate_value(sensor, method="normal"):
@@ -65,64 +65,53 @@ def generate_payload(sensor, device, site_id, current_time):
     }
     
 
-def run_simulation(site, current_time, params):
+def run_simulation(site, params, logger):
     
     """Function to run simulation for a specific site"""
-    
-    # Create new site specific logger's
-    logger = utils.logger(params["LOGGING_FILE"] + "_" + str(site["siteId"]) + ".log", params["CONSOLE_DEBUG_LEVEL"], params["FILE_DEBUG_LEVEL"])
     
     logger.info(f"simulate.run_simulation - Site ID {site["siteId"]}: Starding Simulation")
 
     logger.debug(f"simulation.run_simulation - Site ID {site["siteId"]}: Printing Complete site record")
-    utils.pp_json(site, logger)
-    
-    batch_flush_counter = 0
-    total_record_counter = 0
+    pp_json(site, logger)
      
     # MongoDB persistence
-    mongodb_collection = connection.create_mongo_connection(params, site["siteId"], logger)
+    mongodb_collection = create_mongo_connection(params, site["siteId"], logger)
     
     if mongodb_collection == -1:
         logger.critical(f"simulate.run_simulation - Site ID {site["siteId"]} EXITING")
         os._exit(1)
             
-    # Current Phase
-    if site["reccap"] > 0:
-        logger.info(f"simulate.run_simulation - Site ID {site["siteId"]}: Running current phase")
+    # Start simulation
+    logger.info(f"simulate.run_simulation - Site ID {site["siteId"]}: Start simulation")
+        
+    
+    while True:
         
         my_docs = []
         
-        for loop in range(site["reccap"]):
-            current_loop_time = current_time + timedelta(milliseconds=site["sleeptime"] * loop)
-            
-            for device in site["devices"]:
-                for sensor in device["sensors"]:
-                    payload = generate_payload(sensor, device, site["siteId"], current_loop_time)
-                      
-                    batch_flush_counter += 1
-                    total_record_counter += 1
-                
-                    my_docs.append(payload)
-                    
-                    if batch_flush_counter == site["flush_size"]:
-                        connection.insert_mongo(mongodb_collection, site["siteId"], my_docs, logger)
-
-                        logger.debug(f"Adding {batch_flush_counter} to {total_record_counter}")
-                        
-                        # Reset flush counter
-                        batch_flush_counter = 0
-                        my_docs = []    
-                    
-                    logger.debug(f"simulate.run_simulation SiteId {site["siteId"]} - Current Phase: Payload {payload}")
-                    
-                    sensor["last_value"] = payload["measurement"]
-
-            time.sleep(site["sleeptime"] / 1000)
+        # for _ in range(site["reccap"]):
+        current_time = datetime.now()
         
-        logger.info(f"simulate.run_simulation - Site ID {site["siteId"]}: Completed current phase")
+        for device in site["devices"]:
+            for sensor in device["sensors"]:
+                payload = generate_payload(sensor, device, site["siteId"], current_time)
+                my_docs.append(payload)
+            
+            # Save the collection in the mongo database
+            insert_mongo(mongodb_collection, site["siteId"], my_docs, logger)
+                
+            # Reset my_docs
+            my_docs = []    
+                
+            logger.debug(f"simulate.run_simulation SiteId {site["siteId"]} - Device ID {device["deviceId"]}: Payload {payload}")
+            
+            sensor["last_value"] = payload["measurement"]
+
+        time.sleep(site["sleeptime"] / 1000)
     
-    logger.info(f"simulation.run_simulation - Site ID {site["siteId"]}: Completed simulation")
+        logger.info(f"simulation.run_simulation - Site ID {site["siteId"]}: IoT data generation is in progress...")
+        logger.info("To stop press Ctrl+C")
+        logger.info("")
     
     
     
