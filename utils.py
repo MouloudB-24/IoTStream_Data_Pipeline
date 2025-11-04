@@ -18,12 +18,17 @@ import os
 import logging
 import json
 import sys
+from dotenv import load_dotenv
+
+import config
+
+# Load environment variables
+load_dotenv()
 
 
-def logger(filename, console_debuglevel, file_debuglevel):
+def logger(filename, console_debug_level, file_debug_level):
     
     """Common generic logger stup, used to display information in the console and the logging file"""
-    
     
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.DEBUG)
@@ -35,19 +40,19 @@ def logger(filename, console_debuglevel, file_debuglevel):
     ch = logging.StreamHandler()
     
     # Set file log level
-    if console_debuglevel == 0:
+    if console_debug_level == 0:
         ch.setLevel(logging.DEBUG)
     
-    elif console_debuglevel == 1:
+    elif console_debug_level == 1:
         ch.setLevel(logging.INFO)
     
-    elif console_debuglevel == 2:
+    elif console_debug_level == 2:
         ch.setLevel(logging.WARNING)
         
-    elif console_debuglevel == 3:
+    elif console_debug_level == 3:
         ch.setLevel(logging.ERROR)
         
-    elif console_debuglevel == 4:
+    elif console_debug_level == 4:
         ch.setLevel(logging.CRITICAL)
     
     ch.setFormatter(formatter)
@@ -57,19 +62,19 @@ def logger(filename, console_debuglevel, file_debuglevel):
     fh = logging.FileHandler(filename)
     
     # Set file log level
-    if file_debuglevel == 0:
+    if file_debug_level == 0:
         fh.setLevel(logging.DEBUG)
     
-    elif file_debuglevel == 1:
+    elif file_debug_level == 1:
         fh.setLevel(logging.INFO)
         
-    elif file_debuglevel == 2:
+    elif file_debug_level == 2:
         fh.setLevel(logging.WARNING)
     
-    elif file_debuglevel == 3:
+    elif file_debug_level == 3:
         fh.setLevel(logging.ERROR)
     
-    elif file_debuglevel == 4:
+    elif file_debug_level == 4:
         fh.setLevel(logging.CRITICAL)
     
     else:
@@ -81,39 +86,46 @@ def logger(filename, console_debuglevel, file_debuglevel):
     return logger
     
     
-def configparams():
+def config_params():
     
     """Retreive Common Config Pamameters in a dictionary format"""
     
-    config_params = {}
-    
-    config_params["CONSOLE_DEBUGLEVEL"] = int(os.environ["CONSOLE_DEBUGLEVEL"])
-    config_params["FILE_DEBUGLEVEL"] = int(os.environ["FILE_DEBUGLEVEL"])
-    
-    config_params["LOGGINGFILE"] = os.environ["LOGGINGFILE"]
-    config_params["SEEDFILE"] = os.environ["SEEDFILE"]
-    config_params["SITEIDS"] = os.environ["SITEIDS"].split(",")
-    
-    return config_params
+    return {
+        # General parameters
+        "CONSOLE_DEBUG_LEVEL": config.CONSOLE_DEBUG_LEVEL,
+        "FILE_DEBUG_LEVEL": config.FILE_DEBUG_LEVEL,
+        
+        "LOGGING_FILE": config.LOGGING_FILE,
+        "INPUT_DATA_FILE": config.INPUT_DATA_FILE,
+        "SITE_IDS": config.SITE_IDS,
+        
+        # Mongo parameters
+        "MONGO_USERNAME": os.environ["MONGO_USERNAME"],
+        "MONGO_PASSWORD": os.environ["MONGO_PASSWORD"],
+        "MONGO_DATABASE": os.environ["MONGO_DATABASE"],
+        "MONGO_COLLECTION": os.environ["MONGO_COLLECTION"]
+    }
+   
 
-
-def echo_config(config_params, logger):
-    logger.info("*"*65)
+def echo_config(params, logger):
+    logger.info("*"*70)
     logger.info("* ")
     logger.info("*          Python IoT Sensor data generator")
     logger.info("* ")
-    logger.info("*"*65)
+    logger.info("*"*70)
     logger.info("* General")
     
-    logger.info("* Console Debuglevel       : "+ str(config_params["CONSOLE_DEBUGLEVEL"])) 
-    logger.info("* File Debuglevel          : "+ str(config_params["FILE_DEBUGLEVEL"]))
+    logger.info("* Console Debuglevel       : "+ str(params["CONSOLE_DEBUG_LEVEL"])) 
+    logger.info("* File Debuglevel          : "+ str(params["FILE_DEBUG_LEVEL"]))
         
-    logger.info("* Logfile                  : "+ config_params["LOGGINGFILE"])
-    logger.info("* Seedfile                 : "+ config_params["SEEDFILE"])
-    logger.info("* SiteId's                 : "+ str(config_params["SITEIDS"]))
+    logger.info("* Logging file             : "+ params["LOGGING_FILE"])
+    logger.info("* Input data file          : "+ params["INPUT_DATA_FILE"])
+    logger.info("* SiteId's                 : "+ str(params["SITE_IDS"]))
     
+    logger.info("* Mongo Database          : " + params["MONGO_DATABASE"])
+    logger.info("* Mongo Collection         : " + params["MONGO_COLLECTION"])
     
-    logger.info("*"*65)     
+    logger.info("*"*70)     
     logger.info("")
 
 
@@ -128,22 +140,22 @@ def pp_json(json_thing, logger, sort=False, indents=4):
         logger.debug(json.dumps(json_thing, sort_keys=sort, indent=indents))
 
 
-def read_seed_file(filename, logger):
+def read_input_data(filename, logger):
     
     """Lets read entire seed file in"""
     
-    my_seedfile = []
+    sites = []
 
-    logger.info("utils.read_seed_file Called ")
+    logger.info("utils.read_input_data Called ")
 
-    logger.info(f"utils.read_seed_file Loading file: {filename}")
+    logger.info(f"utils.read_input_data Loading file: {filename}")
 
     try:
         with open(filename, "r") as f:
-            my_seedfile = json.load(f)
+            sites = json.load(f)
 
     except IOError as e:
-        logger.critical(f"utils.read_seed_file I/O error: {filename}, {e.errno}, {e.strerror}")
+        logger.critical(f"utils.read_input_data I/O error: {filename}: {e}")
         return -1
 
     except:  # handle other exceptions such as attribute errors
@@ -151,17 +163,12 @@ def read_seed_file(filename, logger):
         return -1
 
     finally:
-        logger.debug("utils.read_seed_file Printing Seed file")
-        
-        # pp_json only prints diring debug level due to the volume of information
-        pp_json(my_seedfile, logger)
+        logger.info("utils.read_input_data Completed ")
 
-        logger.info("utils.read_seed_file Completed ")
-
-    return my_seedfile
+    return sites
 
 
-def find_site(my_seedfile, siteId, logger):
+def find_site(sites, siteId, logger):
     
     """Find the specific site in array of sites based on siteId"""
     
@@ -170,7 +177,7 @@ def find_site(my_seedfile, siteId, logger):
     site = None
     found = False
     
-    for site in my_seedfile:
+    for site in sites:
         if site["siteId"] == siteId:
             
             logger.info(f"utils.find_site Retreived, SiteId: {siteId}")

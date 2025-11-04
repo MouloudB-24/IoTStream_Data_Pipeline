@@ -22,28 +22,28 @@
 import pymongo
 
 
-def create_mongo_connection(config_params, siteId, logger):
+def create_mongo_connection(params, siteId, logger):
     
     """Connect to the MongoDB database 'IoTSensor_db' """
     
     try:
-        if config_params["MONGO_USERNAME"] != "":
-            config_params["MONGO_URI"] = f'mongodb://{config_params["MONGO_USERNAME"]}:{config_params["MONGO_PASSWORD"]}@{config_params["MONGO_HOST"]}:{int(config_params["MONGO_PORT"])}/?directConnection=true'
+        if params["MONGO_USERNAME"] != "":
+            MONGO_URI = f"mongodb://{params["MONGO_USERNAME"]}:{params["MONGO_PASSWORD"]}@localhost:27017/?directConnection=true"
         else:
-            config_params["MONGO_URI"] = f'mongodb://{config_params["MONGO_HOST"]}:{int(config_params["MONGO_PORT"])}/?{config_params["MONGO_DIRECT"]}'
+            MONGO_URI = "mongodb://localhost:27017/?directConnection=true"
     
-        logger.debug(f"connection_db.create_mongo_connection - Site {siteId} - URL: {config_params['MONGO_URI']}")
+        logger.debug(f"connection_db.create_mongo_connection - Site {siteId} - URI: {MONGO_URI}")
 
         try:
-            connection = pymongo.MongoClient(config_params["MONGO_URI"])
+            connection = pymongo.MongoClient(MONGO_URI)
             connection.admin.command("ping")
             
         except pymongo.errors.ServerSelectionTimeoutError as err:
             logger.critical(f"connection_db.create_mongo_connection - Site {siteId} - FAILED error: {err}")
             return -1
         
-        my_db = connection[config_params["MONGO_DATASTORE"]]
-        my_collection = my_db[config_params["MONGO_COLLECTION"]]
+        my_database = connection[params["MONGO_DATABASE"]]
+        my_collection = my_database[params["MONGO_COLLECTION"]]
         
         logger.info(f"connection_db.create_mongo_connection - Site {siteId} - CONNECTED")
         
@@ -54,18 +54,12 @@ def create_mongo_connection(config_params, siteId, logger):
         return -1 
         
 
-def insert_mongo(my_collection, siteId, mode, payload, logger):
+def insert_mongo(my_collection, siteId, payload, logger):
     
     """Insert one or many document into the MongoDB collection"""
     
-    try:
-        if mode == 1:
-            result = my_collection.insert_one(payload)
-        
-        else:
-            result = my_collection.insert_many(payload)
-    
-        return result
+    try:  
+        return my_collection.insert_many(payload)
     
     except pymongo.errors.PyMongoError as e:
         logger.error(f"connection.insertOne - Site ID {siteId}, insertOne - FAILED: {e} ")

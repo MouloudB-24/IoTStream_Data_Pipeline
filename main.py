@@ -20,36 +20,24 @@ import simulate
 from datetime import datetime
 import multiprocessing
 
-import connection
-
 
 def main():
     
     """_summary_"""
     
-    runTime = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
-    config_params = utils.configparams()
-    config_params["LOGGINGFILE"] = config_params["LOGGINGFILE"] + "_" + runTime
-    logger = utils.logger(config_params["LOGGINGFILE"] + "_common.log", config_params["CONSOLE_DEBUGLEVEL"], config_params["FILE_DEBUGLEVEL"])
+    run_time = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+    params = utils.config_params()
+    params["LOGGING_FILE"] = params["LOGGING_FILE"] + "_" + run_time
+    logger = utils.logger(params["LOGGING_FILE"] + "_common.log", params["CONSOLE_DEBUG_LEVEL"], params["FILE_DEBUG_LEVEL"])
     
-    logger.info(f"Starding run, logfile => {config_params["LOGGINGFILE"]}")
+    logger.info(f"Starding run, logfile => {params["LOGGING_FILE"]}")
     
-    utils.echo_config(config_params, logger)
+    utils.echo_config(params, logger)
     
-    # Load the entire SeedFile
-    my_seedfile = utils.read_seed_file(config_params["SEEDFILE"], logger)
-    if my_seedfile == -1:
-        os._exit(1) # quit: problem in the seed file
-    
-    # Load/filtred out the site data based on SITEIDS environment variable
-    my_sites = []
-    for siteId in config_params["SITEIDS"]:
-        cur_site = utils.find_site(my_seedfile, int(siteId), logger)
-        if cur_site == -1:
-            os._exit(1) # quit: siteId was not found
-        
-        my_sites.append(cur_site)
-
+    # Load data site
+    sites = utils.read_input_data(params["INPUT_DATA_FILE"], logger)
+    if sites == -1:
+        os._exit(1) # quit: problem in the input data file
 
     current_time = datetime.now()
     
@@ -57,10 +45,10 @@ def main():
     processes = []
     
     try:
-        for site in my_sites:
+        for site in sites:
             logger.info(f"Calling simulate.run_simulation for SiteId: {site["siteId"]}")
             
-            p = multiprocessing.Process(target=simulate.run_simulation, args=(site, current_time, config_params))
+            p = multiprocessing.Process(target=simulate.run_simulation, args=(site, current_time, params))
             processes.append(p)
             p.start()
         
@@ -78,9 +66,8 @@ def main():
         logger.info("All processes terminated. Exiting gracefully...")
         
     
-    logger.info(f"Completed run, logfile => {config_params["LOGGINGFILE"]}")
+    logger.info(f"Completed run, logfile => {params["LOGGING_FILE"]}")
    
-    # connection.create_mongo_connection(config_params, 101, logger)
     
 if __name__ == "__main__":
     main()

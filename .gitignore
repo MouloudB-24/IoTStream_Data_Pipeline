@@ -1,3 +1,4 @@
 venv
-logger1.log
-app1/__pycache__
+*/__pycache__
+logging/
+.env
