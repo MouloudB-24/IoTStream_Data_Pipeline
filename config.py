@@ -17,5 +17,10 @@ LOGGING_FILE = "logging/logger"
 
 INPUT_DATA_FILE = "resources/sites.json"
 
-SITE_IDS = [(101, "CNPE-Nogent")]
+# Data site
+SITE_IDS = 101
+LATITUDE = 48.494
+LONGITUDE = 3.498
 
+# Kafka
+sensor_topic_name = "sensorIoT_topic"

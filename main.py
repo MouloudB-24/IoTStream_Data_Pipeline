@@ -37,12 +37,10 @@ def main():
     
     # Load data site
     sites = read_input_data(params["INPUT_DATA_FILE"], logger_)
+    
     if sites == -1:
         os._exit(1) # quit: problem in the input data file
 
-    current_time = datetime.now()
-    
-    # Create processs for each site
     processes = []
     
     try:
@@ -67,8 +65,8 @@ def main():
         logger_.info("All processes terminated. Exiting gracefully...")
         
     
-    logger_.info(f"Completed run, logfile => {params["LOGGING_FILE"]}")
-   
+    logger_.info(f"Completed run, logfile => {params["LOGGING_FILE"]}")      
+     
     
 if __name__ == "__main__":
     main()
