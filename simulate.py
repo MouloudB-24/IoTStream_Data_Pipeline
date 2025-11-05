@@ -21,6 +21,8 @@ from datetime import datetime
 
 from utils import pp_json
 from connection import create_mongo_connection, insert_mongo
+from kafka_utils import producer_sensor_data, consumer_sensor_data
+from config import sensor_topic_name
 
 
 def generate_value(sensor, method="normal"):
@@ -55,7 +57,7 @@ def generate_payload(sensor, device, site_id, current_time):
     
     return {
         "timestamp": timestamp,
-        "matedata": {
+        "metadata": {
             "siteId": site_id,
             "deviceId": device["deviceId"],
             "sensorId": sensor["sensorId"],
@@ -68,8 +70,6 @@ def generate_payload(sensor, device, site_id, current_time):
 def run_simulation(site, params, logger):
     
     """Function to run simulation for a specific site"""
-    
-    logger.info(f"simulate.run_simulation - Site ID {site["siteId"]}: Starding Simulation")
 
     logger.debug(f"simulation.run_simulation - Site ID {site["siteId"]}: Printing Complete site record")
     pp_json(site, logger)
@@ -80,35 +80,40 @@ def run_simulation(site, params, logger):
     if mongodb_collection == -1:
         logger.critical(f"simulate.run_simulation - Site ID {site["siteId"]} EXITING")
         os._exit(1)
-            
-    # Start simulation
-    logger.info(f"simulate.run_simulation - Site ID {site["siteId"]}: Start simulation")
         
-    
+    logger.info(f"simulate.run_simulation - Site ID {site["siteId"]}: Starding Simulation")
+                
     while True:
-        
-        my_docs = []
-        
-        # for _ in range(site["reccap"]):
         current_time = datetime.now()
         
         for device in site["devices"]:
+            
+            logger.info(f"kafka_utils.producer_sensor_data Device ID {device["deviceId"]} - Sending messages to topic {sensor_topic_name}")
+            
             for sensor in device["sensors"]:
                 payload = generate_payload(sensor, device, site["siteId"], current_time)
-                my_docs.append(payload)
+                
+                # envoyer des données dans topic kafka
+                producer_sensor_data(sensor_topic_name, payload, device["deviceId"], sensor["sensorId"], logger)
+                        
+                logger.debug(f"simulate.run_simulation Device ID {device["deviceId"]}: Payload {payload}")
             
-            # Save the collection in the mongo database
+                sensor["last_value"] = payload["measurement"]
+            
+            # Call a kafka consumer
+            my_docs = consumer_sensor_data(sensor_topic_name, device, logger)
+            
+            # Loading data into Mongodb
             insert_mongo(mongodb_collection, site["siteId"], my_docs, logger)
-                
-            # Reset my_docs
-            my_docs = []    
-                
-            logger.debug(f"simulate.run_simulation SiteId {site["siteId"]} - Device ID {device["deviceId"]}: Payload {payload}")
             
-            sensor["last_value"] = payload["measurement"]
+            logger.info(f"simulation.run_simulation Device ID {device["deviceId"]}: Messages saved in Mongodb")
+            logger.info("*")
+            
+            # reset my_docs
+            my_docs = []
 
-        time.sleep(site["sleeptime"] / 1000)
-    
+        time.sleep(site["sleeptime"] / 1000)     
+        
         logger.info(f"simulation.run_simulation - Site ID {site["siteId"]}: IoT data generation is in progress...")
         logger.info("To stop press Ctrl+C")
         logger.info("")
