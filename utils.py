@@ -113,7 +113,7 @@ def config_params():
 def echo_config(params, logger):
     logger.info("*"*70)
     logger.info("* ")
-    logger.info("*          Python IoT Sensor data generator")
+    logger.info("*          IoT Stream Data Pipeline    ")
     logger.info("* ")
     logger.info("*"*70)
     logger.info("* General")
@@ -149,8 +149,6 @@ def read_input_data(filename, logger):
     
     sites = []
 
-    logger.info("utils.read_input_data Called ")
-
     logger.info(f"utils.read_input_data Loading file: {filename}")
 
     try:
@@ -164,9 +162,6 @@ def read_input_data(filename, logger):
     except:  # handle other exceptions such as attribute errors
         logger.critical(f"utils.read_file Unexpected error: {filename}, {sys.exc_info()[1]}")
         return -1
-
-    finally:
-        logger.info("utils.read_input_data Completed ")
 
     return sites
 

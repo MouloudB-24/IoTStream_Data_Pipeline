@@ -1,3 +1,10 @@
+import os
+from dotenv import load_dotenv
+
+# Load API KEY
+load_dotenv()
+API_KEY = os.environ["API_KEY"]
+
 # Debug Levels:
 """
 0 Debug       -> Allot of information will be printed, including printing site configuration to logfile.
@@ -13,14 +20,23 @@ CONSOLE_DEBUG_LEVEL = 1
 # FILE Handler
 FILE_DEBUG_LEVEL = 0
 
+# Data
 LOGGING_FILE = "logging/logger"
-
 INPUT_DATA_FILE = "resources/sites.json"
 
 # Data site
 SITE_IDS = 101
-LATITUDE = 48.494
-LONGITUDE = 3.498
+NB_SONSORS = 12
 
 # Kafka
-sensor_topic_name = "sensorIoT_topic"
+IoT_topic = "IoT_topic"
+
+# Weather API
+QUATA = 1000
+BASE_URL = "https://api.openweathermap.org/data/2.5/weather"
+PARAMS = {
+    "q": "Nogent-sur-seine, FR",
+    "appid": API_KEY,
+    "units": "metric",
+    "lang": "fr"
+}

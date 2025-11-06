@@ -22,7 +22,7 @@
 import pymongo
 
 
-def create_mongo_connection(params, siteId, logger):
+def create_mongo_connection(params, logger):
     
     """Connect to the MongoDB database 'IoTSensor_db' """
     
@@ -32,37 +32,37 @@ def create_mongo_connection(params, siteId, logger):
         else:
             MONGO_URI = "mongodb://localhost:27017/?directConnection=true"
     
-        logger.debug(f"connection_db.create_mongo_connection - Site {siteId} - URI: {MONGO_URI}")
+        logger.debug(f"connection_db.create_mongo_connection - URI: {MONGO_URI}")
 
         try:
             connection = pymongo.MongoClient(MONGO_URI)
             connection.admin.command("ping")
             
         except pymongo.errors.ServerSelectionTimeoutError as err:
-            logger.critical(f"connection_db.create_mongo_connection - Site {siteId} - FAILED error: {err}")
+            logger.critical(f"connection_db.create_mongo_connection - FAILED error: {err}")
             return -1
         
         my_database = connection[params["MONGO_DATABASE"]]
         my_collection = my_database[params["MONGO_COLLECTION"]]
         
-        logger.info(f"connection_db.create_mongo_connection - Site {siteId} - CONNECTED")
+        logger.info(f"connection_db.create_mongo_connection - CONNECTED")
         
         return my_collection
     
     except Exception as e:
-        logger.critical(f"connection_db.create_mongo_connection - Site {siteId} - FAILED error: {e}")
+        logger.critical(f"connection_db.create_mongo_connection - FAILED error: {e}")
         return -1 
         
 
-def insert_mongo(my_collection, siteId, payload, logger):
+def insert_to_mongodb(my_collection, events, logger):
     
     """Insert one or many document into the MongoDB collection"""
     
     try:  
-        return my_collection.insert_many(payload)
+        return my_collection.insert_many(events)
     
     except pymongo.errors.PyMongoError as e:
-        logger.error(f"connection.insertOne - Site ID {siteId}, insertOne - FAILED: {e} ")
+        logger.error(f"connection.insertOne - insert_many - FAILED: {e} ")
         return -1
 
     
