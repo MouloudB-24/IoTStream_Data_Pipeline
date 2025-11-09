@@ -1,0 +1,157 @@
+2025-11-07 21:45:34,842 - INFO - Starding run, logfile => logs/logger_101_2025-11-07_21:45:34
+2025-11-07 21:45:34,842 - INFO - **********************************************************************
+2025-11-07 21:45:34,843 - INFO - * 
+2025-11-07 21:45:34,843 - INFO - *          IoT Stream Data Pipeline    
+2025-11-07 21:45:34,843 - INFO - * 
+2025-11-07 21:45:34,843 - INFO - **********************************************************************
+2025-11-07 21:45:34,843 - INFO - * General
+2025-11-07 21:45:34,843 - INFO - * Console Debuglevel       : 1
+2025-11-07 21:45:34,843 - INFO - * File Debuglevel          : 0
+2025-11-07 21:45:34,843 - INFO - * Logging file             : logs/logger_101_2025-11-07_21:45:34
+2025-11-07 21:45:34,843 - INFO - * Input data file          : conf/beauce.json
+2025-11-07 21:45:34,843 - INFO - * SiteId's                 : 101
+2025-11-07 21:45:34,843 - INFO - * Mongo Database          : IoTSensor_db
+2025-11-07 21:45:34,843 - INFO - * Mongo Collection         : sensor_data
+2025-11-07 21:45:34,843 - INFO - **********************************************************************
+2025-11-07 21:45:34,843 - INFO - 
+2025-11-07 21:45:34,849 - INFO - utils.read_input_data Loading file: conf/beauce.json
+2025-11-07 21:45:34,849 - DEBUG - producer_iot.main - Site ID 1: Printing Complete site record
+2025-11-07 21:45:34,850 - DEBUG - {
+    "siteId": 1,
+    "name": "Beauce",
+    "location": {
+        "latitude": 48.2,
+        "longitude": 1.7
+    },
+    "time_zone": "+1:00",
+    "sleeptime": 3000,
+    "devices": [
+        {
+            "deviceId": 1,
+            "deviceType": "Station_Meteo",
+            "stabilityFactor": 98,
+            "start_time": "00:00",
+            "end_time": "23:59",
+            "sensors": [
+                {
+                    "sensorId": 11,
+                    "min_range": 5,
+                    "max_range": 35,
+                    "unit": "\u00b0C",
+                    "sensorType": "temperature_air",
+                    "sd": 3,
+                    "mean": 18
+                },
+                {
+                    "sensorId": 12,
+                    "min_range": 30,
+                    "max_range": 100,
+                    "unit": "%",
+                    "sensorType": "humidity_air",
+                    "sd": 10,
+                    "mean": 65
+                },
+                {
+                    "sensorId": 13,
+                    "min_range": 0,
+                    "max_range": 10,
+                    "unit": "mm",
+                    "sensorType": "rainfall",
+                    "sd": 2,
+                    "mean": 2
+                },
+                {
+                    "sensorId": 14,
+                    "min_range": 200,
+                    "max_range": 1000,
+                    "unit": "W/m2",
+                    "sensorType": "solar_radiation",
+                    "sd": 100,
+                    "mean": 600
+                }
+            ]
+        },
+        {
+            "deviceId": 2,
+            "deviceType": "Capteur_Sol",
+            "stabilityFactor": 97,
+            "start_time": "00:00",
+            "end_time": "23:59",
+            "sensors": [
+                {
+                    "sensorId": 21,
+                    "min_range": 10,
+                    "max_range": 40,
+                    "unit": "%",
+                    "sensorType": "soil_moisture",
+                    "sd": 5,
+                    "mean": 25
+                },
+                {
+                    "sensorId": 22,
+                    "min_range": 10,
+                    "max_range": 30,
+                    "unit": "\u00b0C",
+                    "sensorType": "soil_temperature",
+                    "sd": 2,
+                    "mean": 20
+                },
+                {
+                    "sensorId": 23,
+                    "min_range": 3,
+                    "max_range": 10,
+                    "unit": "pH",
+                    "sensorType": "soil_ph",
+                    "sd": 0.2,
+                    "mean": 7
+                }
+            ]
+        },
+        {
+            "deviceId": 3,
+            "deviceType": "Pompe_Irrigation",
+            "stabilityFactor": 99,
+            "start_time": "06:00",
+            "end_time": "20:00",
+            "sensors": [
+                {
+                    "sensorId": 31,
+                    "min_range": 0.5,
+                    "max_range": 3.0,
+                    "unit": "bar",
+                    "sensorType": "pressure",
+                    "sd": 0.2,
+                    "mean": 1.5
+                },
+                {
+                    "sensorId": 32,
+                    "min_range": 10,
+                    "max_range": 100,
+                    "unit": "L/min",
+                    "sensorType": "flow_rate",
+                    "sd": 10,
+                    "mean": 60
+                }
+            ]
+        },
+        {
+            "deviceId": 4,
+            "deviceType": "Capteur_Evapotranspiration",
+            "stabilityFactor": 95,
+            "start_time": "06:00",
+            "end_time": "20:00",
+            "sensors": [
+                {
+                    "sensorId": 41,
+                    "min_range": 0,
+                    "max_range": 6,
+                    "unit": "mm/jour",
+                    "sensorType": "evapotranspiration",
+                    "sd": 1,
+                    "mean": 3
+                }
+            ]
+        }
+    ]
+}
+2025-11-07 21:45:34,850 - INFO - producer_iot.main - Site ID 1: Starding ESP Kafka

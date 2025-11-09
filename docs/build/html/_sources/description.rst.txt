@@ -1,0 +1,21 @@
+Description
+===========
+
+Contexte
+--------
+L'agriculture utilise 70% des ressources en eau douce accessibles dans le monde, mais 60% de cette eau est gaspillée pour plusieurs causes, 
+parmi eux, la méthode d'irrigation inefficace appliquée.
+
+source : https://www.worldwildlife.org/our-work/freshwater/water-scarcity/#:~:text=Shutterstock%20%2F%20Roman%20Mikhailiuk-,Agriculture,in%20which%20they%20are%20grown.
+
+Données
+-------
+Données IoT : humitidé, température, PH et N-P-K
+
+Données méotrologique : températures + prévisions
+
+Données satellites : imagerie NDVI (végétation)
+
+Sol : Données pédagogiques historiques
+
+

@@ -1,8 +1,8 @@
 
 import os
-from config import IoT_topic, NB_SONSORS
-from db.db_connection import create_mongo_connection
-from kafka_utils.kafka_consumer import consumer_iot_message
+from config.config import IoT_topic, NB_SONSORS
+from src.utils.db_connection import create_mongo_connection
+from kafka_utils.kafka_consumer import consumer_message
 
 
 def main(params, logger):
@@ -15,4 +15,4 @@ def main(params, logger):
         os._exit(1)
     
     # Loading data into Mongodb
-    consumer_iot_message(IoT_topic, mongodb_collection, NB_SONSORS, logger)
+    consumer_message(IoT_topic, mongodb_collection, NB_SONSORS, logger)

@@ -1,0 +1,18 @@
+2025-11-07 21:42:35,573 - INFO - Starding run, logfile => logs/logger_101_2025-11-07_21:42:35
+2025-11-07 21:42:35,573 - INFO - **********************************************************************
+2025-11-07 21:42:35,573 - INFO - * 
+2025-11-07 21:42:35,574 - INFO - *          IoT Stream Data Pipeline    
+2025-11-07 21:42:35,574 - INFO - * 
+2025-11-07 21:42:35,574 - INFO - **********************************************************************
+2025-11-07 21:42:35,574 - INFO - * General
+2025-11-07 21:42:35,574 - INFO - * Console Debuglevel       : 1
+2025-11-07 21:42:35,574 - INFO - * File Debuglevel          : 0
+2025-11-07 21:42:35,574 - INFO - * Logging file             : logs/logger_101_2025-11-07_21:42:35
+2025-11-07 21:42:35,574 - INFO - * Input data file          : resources/sites.json
+2025-11-07 21:42:35,574 - INFO - * SiteId's                 : 101
+2025-11-07 21:42:35,574 - INFO - * Mongo Database          : IoTSensor_db
+2025-11-07 21:42:35,574 - INFO - * Mongo Collection         : sensor_data
+2025-11-07 21:42:35,575 - INFO - **********************************************************************
+2025-11-07 21:42:35,575 - INFO - 
+2025-11-07 21:42:35,580 - INFO - utils.read_input_data Loading file: resources/sites.json
+2025-11-07 21:42:35,581 - CRITICAL - utils.read_input_data I/O error: resources/sites.json: [Errno 2] No such file or directory: 'resources/sites.json'

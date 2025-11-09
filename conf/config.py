@@ -21,8 +21,8 @@ CONSOLE_DEBUG_LEVEL = 1
 FILE_DEBUG_LEVEL = 0
 
 # Data
-LOGGING_FILE = "logging/logger"
-INPUT_DATA_FILE = "resources/sites.json"
+LOGGING_FILE = "logs/logger"
+INPUT_DATA_FILE = "conf/beauce.json"
 
 # Data site
 SITE_IDS = 101
@@ -30,11 +30,12 @@ NB_SONSORS = 12
 
 # Kafka
 IoT_topic = "IoT_topic"
+weather_topic = "weather_topic"
 
 # Weather API
-QUATA = 1000
+QUOTA = 1000
 BASE_URL = "https://api.openweathermap.org/data/2.5/weather"
-PARAMS = {
+API_PARAMS = {
     "q": "Nogent-sur-seine, FR",
     "appid": API_KEY,
     "units": "metric",

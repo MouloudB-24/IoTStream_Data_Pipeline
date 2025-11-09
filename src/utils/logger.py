@@ -1,8 +1,8 @@
 #####################################################################
 #
-# Project       : IoT based TimesSeries Data via Python Application
+# Project       : Smart Irrigation Optimization platform
 #
-# File          : utils.py
+# File          : logger.py
 #
 # Description   : Some common utility functions
 #
@@ -14,22 +14,15 @@
 #
 #######################################################################
 
-import os
 import logging
-import json
-import sys
-from dotenv import load_dotenv
-
-import config
-
-# Load environment variables
-load_dotenv()
+import os
+from conf import config
 
 
-def logger(filename, console_debug_level, file_debug_level):
+def logger(filepath: str, console_debug_level: int, file_debug_level: int):
     
-    """Common generic logger stup, used to display information in the console and the logging file"""
-    
+    """function allowing to configure the logger"""
+        
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.DEBUG)
     
@@ -62,7 +55,7 @@ def logger(filename, console_debug_level, file_debug_level):
     logger.addHandler(ch)
     
     # Create log file
-    fh = logging.FileHandler(filename)
+    fh = logging.FileHandler(filepath)
     
     # Set file log level
     if file_debug_level == 0:
@@ -87,28 +80,7 @@ def logger(filename, console_debug_level, file_debug_level):
     logger.addHandler(fh)
 
     return logger
-    
-    
-def config_params():
-    
-    """Retreive Common Config Pamameters in a dictionary format"""
-    
-    return {
-        # General parameters
-        "CONSOLE_DEBUG_LEVEL": config.CONSOLE_DEBUG_LEVEL,
-        "FILE_DEBUG_LEVEL": config.FILE_DEBUG_LEVEL,
-        
-        "LOGGING_FILE": config.LOGGING_FILE,
-        "INPUT_DATA_FILE": config.INPUT_DATA_FILE,
-        "SITE_IDS": config.SITE_IDS,
-        
-        # Mongo parameters
-        "MONGO_USERNAME": os.environ["MONGO_USERNAME"],
-        "MONGO_PASSWORD": os.environ["MONGO_PASSWORD"],
-        "MONGO_DATABASE": os.environ["MONGO_DATABASE"],
-        "MONGO_COLLECTION": os.environ["MONGO_COLLECTION"]
-    }
-   
+
 
 def echo_config(params, logger):
     logger.info("*"*70)
@@ -132,59 +104,23 @@ def echo_config(params, logger):
     logger.info("")
 
 
-def pp_json(json_thing, logger, sort=False, indents=4):
+def config_params():
     
-    """Console print: display site data only when logging level = debug"""
+    """Retreive Common Config Pamameters in a dictionary format"""
     
-    if type(json_thing) is str:
-        logger.debug(json.dumps(json.loads(json_thing), sort_keys=sort, indent=indents))
-    
-    else:
-        logger.debug(json.dumps(json_thing, sort_keys=sort, indent=indents))
-
-
-def read_input_data(filename, logger):
-    
-    """Lets read entire seed file in"""
-    
-    sites = []
-
-    logger.info(f"utils.read_input_data Loading file: {filename}")
-
-    try:
-        with open(filename, "r") as f:
-            sites = json.load(f)
-
-    except IOError as e:
-        logger.critical(f"utils.read_input_data I/O error: {filename}: {e}")
-        return -1
-
-    except:  # handle other exceptions such as attribute errors
-        logger.critical(f"utils.read_file Unexpected error: {filename}, {sys.exc_info()[1]}")
-        return -1
-
-    return sites
-
-
-def find_site(sites, siteId, logger):
-    
-    """Find the specific site in array of sites based on siteId"""
-    
-    logger.info(f"utils.read_site Called, SiteId: {siteId}")
-    
-    site = None
-    found = False
-    
-    for site in sites:
-        if site["siteId"] == siteId:
-            
-            logger.info(f"utils.find_site Retreived, SiteId: {siteId}")
-            
-            return site
-    
-    if not found:
+    return {
+        # General parameters
+        "CONSOLE_DEBUG_LEVEL": config.CONSOLE_DEBUG_LEVEL,
+        "FILE_DEBUG_LEVEL": config.FILE_DEBUG_LEVEL,
         
-        logger.critical(f"utils.find_site Completed, SiteId: {siteId} NOT FOUND")
+        "LOGGING_FILE": config.LOGGING_FILE,
+        "INPUT_DATA_FILE": config.INPUT_DATA_FILE,
+        "SITE_IDS": config.SITE_IDS,
         
-        return -1
-    
+        # Mongo parameters
+        "MONGO_USERNAME": os.environ["MONGO_USERNAME"],
+        "MONGO_PASSWORD": os.environ["MONGO_PASSWORD"],
+        "MONGO_DATABASE": os.environ["MONGO_DATABASE"],
+        "MONGO_COLLECTION": os.environ["MONGO_COLLECTION"]
+    }
+   

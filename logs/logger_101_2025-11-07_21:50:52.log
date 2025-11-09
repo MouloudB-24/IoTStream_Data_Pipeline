@@ -1,0 +1,237 @@
+2025-11-07 21:50:52,221 - INFO - Starding run, logfile => logs/logger_101_2025-11-07_21:50:52
+2025-11-07 21:50:52,221 - INFO - **********************************************************************
+2025-11-07 21:50:52,221 - INFO - * 
+2025-11-07 21:50:52,221 - INFO - *          IoT Stream Data Pipeline    
+2025-11-07 21:50:52,222 - INFO - * 
+2025-11-07 21:50:52,222 - INFO - **********************************************************************
+2025-11-07 21:50:52,222 - INFO - * General
+2025-11-07 21:50:52,222 - INFO - * Console Debuglevel       : 1
+2025-11-07 21:50:52,222 - INFO - * File Debuglevel          : 0
+2025-11-07 21:50:52,222 - INFO - * Logging file             : logs/logger_101_2025-11-07_21:50:52
+2025-11-07 21:50:52,222 - INFO - * Input data file          : conf/beauce.json
+2025-11-07 21:50:52,222 - INFO - * SiteId's                 : 101
+2025-11-07 21:50:52,222 - INFO - * Mongo Database          : IoTSensor_db
+2025-11-07 21:50:52,222 - INFO - * Mongo Collection         : sensor_data
+2025-11-07 21:50:52,222 - INFO - **********************************************************************
+2025-11-07 21:50:52,222 - INFO - 
+2025-11-07 21:50:52,227 - INFO - utils.read_input_data Loading file: conf/beauce.json
+2025-11-07 21:50:52,228 - DEBUG - producer_iot.main - Site ID 1: Printing Complete site record
+2025-11-07 21:50:52,229 - DEBUG - {
+    "siteId": 1,
+    "name": "Beauce",
+    "location": {
+        "latitude": 48.2,
+        "longitude": 1.7
+    },
+    "time_zone": "+1:00",
+    "sleeptime": 3000,
+    "devices": [
+        {
+            "deviceId": 1,
+            "deviceType": "Station_Meteo",
+            "stabilityFactor": 98,
+            "start_time": "00:00",
+            "end_time": "23:59",
+            "sensors": [
+                {
+                    "sensorId": 11,
+                    "min_range": 5,
+                    "max_range": 35,
+                    "unit": "\u00b0C",
+                    "sensorType": "temperature_air",
+                    "sd": 3,
+                    "mean": 18
+                },
+                {
+                    "sensorId": 12,
+                    "min_range": 30,
+                    "max_range": 100,
+                    "unit": "%",
+                    "sensorType": "humidity_air",
+                    "sd": 10,
+                    "mean": 65
+                },
+                {
+                    "sensorId": 13,
+                    "min_range": 0,
+                    "max_range": 10,
+                    "unit": "mm",
+                    "sensorType": "rainfall",
+                    "sd": 2,
+                    "mean": 2
+                },
+                {
+                    "sensorId": 14,
+                    "min_range": 200,
+                    "max_range": 1000,
+                    "unit": "W/m2",
+                    "sensorType": "solar_radiation",
+                    "sd": 100,
+                    "mean": 600
+                }
+            ]
+        },
+        {
+            "deviceId": 2,
+            "deviceType": "Capteur_Sol",
+            "stabilityFactor": 97,
+            "start_time": "00:00",
+            "end_time": "23:59",
+            "sensors": [
+                {
+                    "sensorId": 21,
+                    "min_range": 10,
+                    "max_range": 40,
+                    "unit": "%",
+                    "sensorType": "soil_moisture",
+                    "sd": 5,
+                    "mean": 25
+                },
+                {
+                    "sensorId": 22,
+                    "min_range": 10,
+                    "max_range": 30,
+                    "unit": "\u00b0C",
+                    "sensorType": "soil_temperature",
+                    "sd": 2,
+                    "mean": 20
+                },
+                {
+                    "sensorId": 23,
+                    "min_range": 3,
+                    "max_range": 10,
+                    "unit": "pH",
+                    "sensorType": "soil_ph",
+                    "sd": 0.2,
+                    "mean": 7
+                }
+            ]
+        },
+        {
+            "deviceId": 3,
+            "deviceType": "Pompe_Irrigation",
+            "stabilityFactor": 99,
+            "start_time": "06:00",
+            "end_time": "20:00",
+            "sensors": [
+                {
+                    "sensorId": 31,
+                    "min_range": 0.5,
+                    "max_range": 3.0,
+                    "unit": "bar",
+                    "sensorType": "pressure",
+                    "sd": 0.2,
+                    "mean": 1.5
+                },
+                {
+                    "sensorId": 32,
+                    "min_range": 10,
+                    "max_range": 100,
+                    "unit": "L/min",
+                    "sensorType": "flow_rate",
+                    "sd": 10,
+                    "mean": 60
+                }
+            ]
+        },
+        {
+            "deviceId": 4,
+            "deviceType": "Capteur_Evapotranspiration",
+            "stabilityFactor": 95,
+            "start_time": "06:00",
+            "end_time": "20:00",
+            "sensors": [
+                {
+                    "sensorId": 41,
+                    "min_range": 0,
+                    "max_range": 6,
+                    "unit": "mm/jour",
+                    "sensorType": "evapotranspiration",
+                    "sd": 1,
+                    "mean": 3
+                }
+            ]
+        }
+    ]
+}
+2025-11-07 21:50:52,229 - INFO - producer_iot.main - Site ID 1: Starding ESP Kafka
+2025-11-07 21:50:52,229 - DEBUG - iot_simulator.simulate_iot - Device Type Station_Meteo: {'timestamp': '2025-11-07T21:50:52.229506', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Station_Meteo', 'sensorType': 'temperature_air', 'unit': '°C'}, 'measure': 18.5334}
+2025-11-07 21:50:52,562 - DEBUG - iot_simulator.simulate_iot - Device Type Station_Meteo: {'timestamp': '2025-11-07T21:50:52.229506', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Station_Meteo', 'sensorType': 'humidity_air', 'unit': '%'}, 'measure': 72.4995}
+2025-11-07 21:50:52,696 - DEBUG - iot_simulator.simulate_iot - Device Type Station_Meteo: {'timestamp': '2025-11-07T21:50:52.229506', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Station_Meteo', 'sensorType': 'rainfall', 'unit': 'mm'}, 'measure': 4.157}
+2025-11-07 21:50:52,822 - DEBUG - iot_simulator.simulate_iot - Device Type Station_Meteo: {'timestamp': '2025-11-07T21:50:52.229506', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Station_Meteo', 'sensorType': 'solar_radiation', 'unit': 'W/m2'}, 'measure': 614.1288}
+2025-11-07 21:50:52,959 - DEBUG - iot_simulator.simulate_iot - Device Type Capteur_Sol: {'timestamp': '2025-11-07T21:50:52.229506', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Capteur_Sol', 'sensorType': 'soil_moisture', 'unit': '%'}, 'measure': 19.6872}
+2025-11-07 21:50:53,091 - DEBUG - iot_simulator.simulate_iot - Device Type Capteur_Sol: {'timestamp': '2025-11-07T21:50:52.229506', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Capteur_Sol', 'sensorType': 'soil_temperature', 'unit': '°C'}, 'measure': 20.704}
+2025-11-07 21:50:53,224 - DEBUG - iot_simulator.simulate_iot - Device Type Capteur_Sol: {'timestamp': '2025-11-07T21:50:52.229506', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Capteur_Sol', 'sensorType': 'soil_ph', 'unit': 'pH'}, 'measure': 7.3661}
+2025-11-07 21:50:53,353 - DEBUG - iot_simulator.simulate_iot - Device Type Pompe_Irrigation: {'timestamp': '2025-11-07T21:50:52.229506', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Pompe_Irrigation', 'sensorType': 'pressure', 'unit': 'bar'}, 'measure': 1.8044}
+2025-11-07 21:50:53,485 - DEBUG - iot_simulator.simulate_iot - Device Type Pompe_Irrigation: {'timestamp': '2025-11-07T21:50:52.229506', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Pompe_Irrigation', 'sensorType': 'flow_rate', 'unit': 'L/min'}, 'measure': 54.9792}
+2025-11-07 21:50:53,615 - DEBUG - iot_simulator.simulate_iot - Device Type Capteur_Evapotranspiration: {'timestamp': '2025-11-07T21:50:52.229506', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Capteur_Evapotranspiration', 'sensorType': 'evapotranspiration', 'unit': 'mm/jour'}, 'measure': 2.4303}
+2025-11-07 21:50:53,744 - INFO - producer_iot.main - Site ID 1: IoT data generation is in progress...
+2025-11-07 21:50:53,744 - INFO - To stop press Ctrl+C
+2025-11-07 21:50:53,745 - INFO - -----
+2025-11-07 21:50:56,746 - DEBUG - iot_simulator.simulate_iot - Device Type Station_Meteo: {'timestamp': '2025-11-07T21:50:56.745944', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Station_Meteo', 'sensorType': 'temperature_air', 'unit': '°C'}, 'measure': 21.7735}
+2025-11-07 21:50:56,873 - DEBUG - iot_simulator.simulate_iot - Device Type Station_Meteo: {'timestamp': '2025-11-07T21:50:56.745944', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Station_Meteo', 'sensorType': 'humidity_air', 'unit': '%'}, 'measure': 88.421}
+2025-11-07 21:50:57,003 - DEBUG - iot_simulator.simulate_iot - Device Type Station_Meteo: {'timestamp': '2025-11-07T21:50:56.745944', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Station_Meteo', 'sensorType': 'rainfall', 'unit': 'mm'}, 'measure': 2.0857}
+2025-11-07 21:50:57,131 - DEBUG - iot_simulator.simulate_iot - Device Type Station_Meteo: {'timestamp': '2025-11-07T21:50:56.745944', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Station_Meteo', 'sensorType': 'solar_radiation', 'unit': 'W/m2'}, 'measure': 736.5949}
+2025-11-07 21:50:57,258 - DEBUG - iot_simulator.simulate_iot - Device Type Capteur_Sol: {'timestamp': '2025-11-07T21:50:56.745944', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Capteur_Sol', 'sensorType': 'soil_moisture', 'unit': '%'}, 'measure': 28.5221}
+2025-11-07 21:50:57,390 - DEBUG - iot_simulator.simulate_iot - Device Type Capteur_Sol: {'timestamp': '2025-11-07T21:50:56.745944', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Capteur_Sol', 'sensorType': 'soil_temperature', 'unit': '°C'}, 'measure': 19.4028}
+2025-11-07 21:50:57,517 - DEBUG - iot_simulator.simulate_iot - Device Type Capteur_Sol: {'timestamp': '2025-11-07T21:50:56.745944', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Capteur_Sol', 'sensorType': 'soil_ph', 'unit': 'pH'}, 'measure': 7.0898}
+2025-11-07 21:50:57,644 - DEBUG - iot_simulator.simulate_iot - Device Type Pompe_Irrigation: {'timestamp': '2025-11-07T21:50:56.745944', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Pompe_Irrigation', 'sensorType': 'pressure', 'unit': 'bar'}, 'measure': 1.2741}
+2025-11-07 21:50:57,773 - DEBUG - iot_simulator.simulate_iot - Device Type Pompe_Irrigation: {'timestamp': '2025-11-07T21:50:56.745944', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Pompe_Irrigation', 'sensorType': 'flow_rate', 'unit': 'L/min'}, 'measure': 84.0865}
+2025-11-07 21:50:57,907 - DEBUG - iot_simulator.simulate_iot - Device Type Capteur_Evapotranspiration: {'timestamp': '2025-11-07T21:50:56.745944', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Capteur_Evapotranspiration', 'sensorType': 'evapotranspiration', 'unit': 'mm/jour'}, 'measure': 4.1479}
+2025-11-07 21:50:58,035 - INFO - producer_iot.main - Site ID 1: IoT data generation is in progress...
+2025-11-07 21:50:58,036 - INFO - To stop press Ctrl+C
+2025-11-07 21:50:58,036 - INFO - -----
+2025-11-07 21:51:01,037 - DEBUG - iot_simulator.simulate_iot - Device Type Station_Meteo: {'timestamp': '2025-11-07T21:51:01.037676', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Station_Meteo', 'sensorType': 'temperature_air', 'unit': '°C'}, 'measure': 19.7109}
+2025-11-07 21:51:01,167 - DEBUG - iot_simulator.simulate_iot - Device Type Station_Meteo: {'timestamp': '2025-11-07T21:51:01.037676', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Station_Meteo', 'sensorType': 'humidity_air', 'unit': '%'}, 'measure': 75.9934}
+2025-11-07 21:51:01,298 - DEBUG - iot_simulator.simulate_iot - Device Type Station_Meteo: {'timestamp': '2025-11-07T21:51:01.037676', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Station_Meteo', 'sensorType': 'rainfall', 'unit': 'mm'}, 'measure': 0.1794}
+2025-11-07 21:51:01,425 - DEBUG - iot_simulator.simulate_iot - Device Type Station_Meteo: {'timestamp': '2025-11-07T21:51:01.037676', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Station_Meteo', 'sensorType': 'solar_radiation', 'unit': 'W/m2'}, 'measure': 514.3473}
+2025-11-07 21:51:01,555 - DEBUG - iot_simulator.simulate_iot - Device Type Capteur_Sol: {'timestamp': '2025-11-07T21:51:01.037676', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Capteur_Sol', 'sensorType': 'soil_moisture', 'unit': '%'}, 'measure': 29.2812}
+2025-11-07 21:51:01,680 - DEBUG - iot_simulator.simulate_iot - Device Type Capteur_Sol: {'timestamp': '2025-11-07T21:51:01.037676', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Capteur_Sol', 'sensorType': 'soil_temperature', 'unit': '°C'}, 'measure': 19.4869}
+2025-11-07 21:51:01,811 - DEBUG - iot_simulator.simulate_iot - Device Type Capteur_Sol: {'timestamp': '2025-11-07T21:51:01.037676', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Capteur_Sol', 'sensorType': 'soil_ph', 'unit': 'pH'}, 'measure': 6.9255}
+2025-11-07 21:51:01,942 - DEBUG - iot_simulator.simulate_iot - Device Type Pompe_Irrigation: {'timestamp': '2025-11-07T21:51:01.037676', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Pompe_Irrigation', 'sensorType': 'pressure', 'unit': 'bar'}, 'measure': 1.8201}
+2025-11-07 21:51:02,071 - DEBUG - iot_simulator.simulate_iot - Device Type Pompe_Irrigation: {'timestamp': '2025-11-07T21:51:01.037676', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Pompe_Irrigation', 'sensorType': 'flow_rate', 'unit': 'L/min'}, 'measure': 72.3638}
+2025-11-07 21:51:02,199 - DEBUG - iot_simulator.simulate_iot - Device Type Capteur_Evapotranspiration: {'timestamp': '2025-11-07T21:51:01.037676', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Capteur_Evapotranspiration', 'sensorType': 'evapotranspiration', 'unit': 'mm/jour'}, 'measure': 2.9775}
+2025-11-07 21:51:02,332 - INFO - producer_iot.main - Site ID 1: IoT data generation is in progress...
+2025-11-07 21:51:02,332 - INFO - To stop press Ctrl+C
+2025-11-07 21:51:02,333 - INFO - -----
+2025-11-07 21:51:05,334 - DEBUG - iot_simulator.simulate_iot - Device Type Station_Meteo: {'timestamp': '2025-11-07T21:51:05.333909', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Station_Meteo', 'sensorType': 'temperature_air', 'unit': '°C'}, 'measure': 20.9095}
+2025-11-07 21:51:05,463 - DEBUG - iot_simulator.simulate_iot - Device Type Station_Meteo: {'timestamp': '2025-11-07T21:51:05.333909', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Station_Meteo', 'sensorType': 'humidity_air', 'unit': '%'}, 'measure': 74.6015}
+2025-11-07 21:51:05,588 - DEBUG - iot_simulator.simulate_iot - Device Type Station_Meteo: {'timestamp': '2025-11-07T21:51:05.333909', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Station_Meteo', 'sensorType': 'rainfall', 'unit': 'mm'}, 'measure': 5.0951}
+2025-11-07 21:51:05,714 - DEBUG - iot_simulator.simulate_iot - Device Type Station_Meteo: {'timestamp': '2025-11-07T21:51:05.333909', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Station_Meteo', 'sensorType': 'solar_radiation', 'unit': 'W/m2'}, 'measure': 731.6908}
+2025-11-07 21:51:05,843 - DEBUG - iot_simulator.simulate_iot - Device Type Capteur_Sol: {'timestamp': '2025-11-07T21:51:05.333909', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Capteur_Sol', 'sensorType': 'soil_moisture', 'unit': '%'}, 'measure': 26.065}
+2025-11-07 21:51:05,982 - DEBUG - iot_simulator.simulate_iot - Device Type Capteur_Sol: {'timestamp': '2025-11-07T21:51:05.333909', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Capteur_Sol', 'sensorType': 'soil_temperature', 'unit': '°C'}, 'measure': 17.1704}
+2025-11-07 21:51:06,108 - DEBUG - iot_simulator.simulate_iot - Device Type Capteur_Sol: {'timestamp': '2025-11-07T21:51:05.333909', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Capteur_Sol', 'sensorType': 'soil_ph', 'unit': 'pH'}, 'measure': 6.735}
+2025-11-07 21:51:06,237 - DEBUG - iot_simulator.simulate_iot - Device Type Pompe_Irrigation: {'timestamp': '2025-11-07T21:51:05.333909', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Pompe_Irrigation', 'sensorType': 'pressure', 'unit': 'bar'}, 'measure': 1.5211}
+2025-11-07 21:51:06,370 - DEBUG - iot_simulator.simulate_iot - Device Type Pompe_Irrigation: {'timestamp': '2025-11-07T21:51:05.333909', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Pompe_Irrigation', 'sensorType': 'flow_rate', 'unit': 'L/min'}, 'measure': 60.715}
+2025-11-07 21:51:06,496 - DEBUG - iot_simulator.simulate_iot - Device Type Capteur_Evapotranspiration: {'timestamp': '2025-11-07T21:51:05.333909', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Capteur_Evapotranspiration', 'sensorType': 'evapotranspiration', 'unit': 'mm/jour'}, 'measure': 3.455}
+2025-11-07 21:51:06,626 - INFO - producer_iot.main - Site ID 1: IoT data generation is in progress...
+2025-11-07 21:51:06,626 - INFO - To stop press Ctrl+C
+2025-11-07 21:51:06,627 - INFO - -----
+2025-11-07 21:51:09,628 - DEBUG - iot_simulator.simulate_iot - Device Type Station_Meteo: {'timestamp': '2025-11-07T21:51:09.627903', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Station_Meteo', 'sensorType': 'temperature_air', 'unit': '°C'}, 'measure': 12.494}
+2025-11-07 21:51:09,757 - DEBUG - iot_simulator.simulate_iot - Device Type Station_Meteo: {'timestamp': '2025-11-07T21:51:09.627903', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Station_Meteo', 'sensorType': 'humidity_air', 'unit': '%'}, 'measure': 67.5817}
+2025-11-07 21:51:09,884 - DEBUG - iot_simulator.simulate_iot - Device Type Station_Meteo: {'timestamp': '2025-11-07T21:51:09.627903', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Station_Meteo', 'sensorType': 'rainfall', 'unit': 'mm'}, 'measure': 0.3033}
+2025-11-07 21:51:10,013 - DEBUG - iot_simulator.simulate_iot - Device Type Station_Meteo: {'timestamp': '2025-11-07T21:51:09.627903', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Station_Meteo', 'sensorType': 'solar_radiation', 'unit': 'W/m2'}, 'measure': 734.0649}
+2025-11-07 21:51:10,158 - DEBUG - iot_simulator.simulate_iot - Device Type Capteur_Sol: {'timestamp': '2025-11-07T21:51:09.627903', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Capteur_Sol', 'sensorType': 'soil_moisture', 'unit': '%'}, 'measure': 26.3205}
+2025-11-07 21:51:10,291 - DEBUG - iot_simulator.simulate_iot - Device Type Capteur_Sol: {'timestamp': '2025-11-07T21:51:09.627903', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Capteur_Sol', 'sensorType': 'soil_temperature', 'unit': '°C'}, 'measure': 17.6627}
+2025-11-07 21:51:10,406 - DEBUG - iot_simulator.simulate_iot - Device Type Capteur_Sol: {'timestamp': '2025-11-07T21:51:09.627903', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Capteur_Sol', 'sensorType': 'soil_ph', 'unit': 'pH'}, 'measure': 6.9006}
+2025-11-07 21:51:10,526 - DEBUG - iot_simulator.simulate_iot - Device Type Pompe_Irrigation: {'timestamp': '2025-11-07T21:51:09.627903', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Pompe_Irrigation', 'sensorType': 'pressure', 'unit': 'bar'}, 'measure': 1.2727}
+2025-11-07 21:51:10,653 - DEBUG - iot_simulator.simulate_iot - Device Type Pompe_Irrigation: {'timestamp': '2025-11-07T21:51:09.627903', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Pompe_Irrigation', 'sensorType': 'flow_rate', 'unit': 'L/min'}, 'measure': 74.7739}
+2025-11-07 21:51:10,779 - DEBUG - iot_simulator.simulate_iot - Device Type Capteur_Evapotranspiration: {'timestamp': '2025-11-07T21:51:09.627903', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Capteur_Evapotranspiration', 'sensorType': 'evapotranspiration', 'unit': 'mm/jour'}, 'measure': 3.1592}
+2025-11-07 21:51:10,908 - INFO - producer_iot.main - Site ID 1: IoT data generation is in progress...
+2025-11-07 21:51:10,908 - INFO - To stop press Ctrl+C
+2025-11-07 21:51:10,909 - INFO - -----
+2025-11-07 21:51:13,910 - DEBUG - iot_simulator.simulate_iot - Device Type Station_Meteo: {'timestamp': '2025-11-07T21:51:13.909810', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Station_Meteo', 'sensorType': 'temperature_air', 'unit': '°C'}, 'measure': 16.4899}
+2025-11-07 21:51:14,042 - DEBUG - iot_simulator.simulate_iot - Device Type Station_Meteo: {'timestamp': '2025-11-07T21:51:13.909810', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Station_Meteo', 'sensorType': 'humidity_air', 'unit': '%'}, 'measure': 81.5472}
+2025-11-07 21:51:14,170 - DEBUG - iot_simulator.simulate_iot - Device Type Station_Meteo: {'timestamp': '2025-11-07T21:51:13.909810', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Station_Meteo', 'sensorType': 'rainfall', 'unit': 'mm'}, 'measure': 3.2612}
+2025-11-07 21:51:14,295 - DEBUG - iot_simulator.simulate_iot - Device Type Station_Meteo: {'timestamp': '2025-11-07T21:51:13.909810', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Station_Meteo', 'sensorType': 'solar_radiation', 'unit': 'W/m2'}, 'measure': 566.2612}
+2025-11-07 21:51:14,421 - DEBUG - iot_simulator.simulate_iot - Device Type Capteur_Sol: {'timestamp': '2025-11-07T21:51:13.909810', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Capteur_Sol', 'sensorType': 'soil_moisture', 'unit': '%'}, 'measure': 38.0}
+2025-11-07 21:51:14,548 - DEBUG - iot_simulator.simulate_iot - Device Type Capteur_Sol: {'timestamp': '2025-11-07T21:51:13.909810', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Capteur_Sol', 'sensorType': 'soil_temperature', 'unit': '°C'}, 'measure': 16.4565}
+2025-11-07 21:51:14,678 - DEBUG - iot_simulator.simulate_iot - Device Type Capteur_Sol: {'timestamp': '2025-11-07T21:51:13.909810', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Capteur_Sol', 'sensorType': 'soil_ph', 'unit': 'pH'}, 'measure': 7.1179}
+2025-11-07 21:51:14,805 - DEBUG - iot_simulator.simulate_iot - Device Type Pompe_Irrigation: {'timestamp': '2025-11-07T21:51:13.909810', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Pompe_Irrigation', 'sensorType': 'pressure', 'unit': 'bar'}, 'measure': 1.4879}
+2025-11-07 21:51:14,934 - DEBUG - iot_simulator.simulate_iot - Device Type Pompe_Irrigation: {'timestamp': '2025-11-07T21:51:13.909810', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Pompe_Irrigation', 'sensorType': 'flow_rate', 'unit': 'L/min'}, 'measure': 68.9365}
+2025-11-07 21:51:15,057 - DEBUG - iot_simulator.simulate_iot - Device Type Capteur_Evapotranspiration: {'timestamp': '2025-11-07T21:51:13.909810', 'metadata': {'siteId': 'Beauce', 'deviceType': 'Capteur_Evapotranspiration', 'sensorType': 'evapotranspiration', 'unit': 'mm/jour'}, 'measure': 3.9189}
+2025-11-07 21:51:15,171 - INFO - producer_iot.main - Site ID 1: IoT data generation is in progress...
+2025-11-07 21:51:15,172 - INFO - To stop press Ctrl+C
+2025-11-07 21:51:15,172 - INFO - -----
+2025-11-07 21:51:15,961 - WARNING - KeyboardInterrupt detected! Terminating all processes...
+2025-11-07 21:51:15,962 - INFO - All processes terminated. Exiting gracefuly!
